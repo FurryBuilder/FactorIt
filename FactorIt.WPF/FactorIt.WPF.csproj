@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F911BAE4-0F2A-4652-918F-1E8ACBAAA317}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FactorIt</RootNamespace>
+    <AssemblyName>FactorIt.WPF</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Grouping>WPF</Grouping>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WPF</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WPF</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\FactorIt\Annotations.cs">
+      <Link>Annotations.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\BindingSyntax.cs">
+      <Link>BindingSyntax.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Collections\ObservableDictionary.cs">
+      <Link>Collections\ObservableDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Collections\Wrappers\AddCollectionChangedEventArgs.cs">
+      <Link>Collections\Wrappers\AddCollectionChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Collections\Wrappers\RemoveCollectionChangedEventArgs.cs">
+      <Link>Collections\Wrappers\RemoveCollectionChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Collections\Wrappers\ReplaceCollectionChangedEventArgs.cs">
+      <Link>Collections\Wrappers\ReplaceCollectionChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Collections\Wrappers\ResetCollectionChangedEventArgs.cs">
+      <Link>Collections\Wrappers\ResetCollectionChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Container.cs">
+      <Link>Container.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IBindingIntercept.cs">
+      <Link>Contracts\IBindingIntercept.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IBindingRoot.cs">
+      <Link>Contracts\IBindingRoot.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IBindingTo.cs">
+      <Link>Contracts\IBindingTo.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IContainer.cs">
+      <Link>Contracts\IContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IContainerNode.cs">
+      <Link>Contracts\IContainerNode.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IRegistration.cs">
+      <Link>Contracts\IRegistration.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Contracts\IServiceLocator.cs">
+      <Link>Contracts\IServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\BindingRootExtensions.cs">
+      <Link>Extensions\BindingRootExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerContainsExtensions.cs">
+      <Link>Extensions\ContainerContainsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerDisposeExtensions.cs">
+      <Link>Extensions\ContainerDisposeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerFirstExtensions.cs">
+      <Link>Extensions\ContainerFirstExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerNodeExtensions.cs">
+      <Link>Extensions\ContainerNodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerPostponeExtensions.cs">
+      <Link>Extensions\ContainerPostponeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ContainerRegisterExtensions.cs">
+      <Link>Extensions\ContainerRegisterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\EnumerableExtensions.cs">
+      <Link>Extensions\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ObjectExtensions.cs">
+      <Link>Extensions\ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Extensions\ServiceLocatorExtensions.cs">
+      <Link>Extensions\ServiceLocatorExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Patterns\Keys.cs">
+      <Link>Patterns\Keys.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Patterns\Singletons.cs">
+      <Link>Patterns\Singletons.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\PosponedAction.cs">
+      <Link>PosponedAction.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Registration.cs">
+      <Link>Registration.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\RegistrationKey.cs">
+      <Link>RegistrationKey.cs</Link>
+    </Compile>
+    <Compile Include="..\FactorIt\Scope.cs">
+      <Link>Scope.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\FactorIt.Common.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

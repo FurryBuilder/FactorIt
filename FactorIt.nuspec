@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>FactorIt</id>
+        <version>0.1.0.0</version>
+        <title>FactorIt</title>
+        <authors>Furry Builder</authors>
+        <owners>Furry Builder</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>An ultra light-weight dependency injection container built around the power of factories.</description>
+    </metadata>
+    <files>
+        <file src="WPF\FactorIt.WPF\Release\FactorIt.WPF.dll" target="lib\net45\FactorIt.WPF.dll" />
+        <file src="WinRT\FactorIt.WinRT\Release\FactorIt.WinRT.dll" target="lib\netcore451\FactorIt.WinRT.dll" />
+        <file src="WinPRT\FactorIt.WinPRT\Release\FactorIt.WinPRT.dll" target="lib\wp8\FactorIt.WinPRT.dll" />
+    </files>
+</package>

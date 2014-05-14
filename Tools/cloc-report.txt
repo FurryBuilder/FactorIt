@@ -1,0 +1,67 @@
+http://cloc.sourceforge.net v 1.60  T=0.18 s (271.1 files/s, 21331.6 lines/s)
+------------------------------------------------------------------------------------------------------------------------
+File                                                                                 blank        comment           code
+------------------------------------------------------------------------------------------------------------------------
+..\FactorIt.Tests\GivenKeylessContainerHierarchy.cs                                    128              0            364
+..\FactorIt\Collections\ObservableDictionary.cs                                         92              8            308
+..\FactorIt.WinRT\FactorIt.WinRT.csproj                                                  0              7            212
+..\FactorIt.WinPRT\FactorIt.WinPRT.csproj                                                0              7            191
+..\FactorIt\Annotations.cs                                                              69            459            188
+..\FactorIt.WPF\FactorIt.WPF.csproj                                                      0              7            147
+..\FactorIt\Container.cs                                                                28              0            106
+..\FactorIt\Extensions\ServiceLocatorExtensions.cs                                      20              0            106
+..\FactorIt.Tests\GivenKeylessContainer.cs                                              33              0             96
+..\FactorIt.Tests\FactorIt.Tests.csproj                                                  0              7             94
+..\FactorIt.Tests\GivenKeyedContainer.cs                                                29              0             85
+..\FactorIt\FactorIt.csproj                                                              0              7             83
+..\FactorIt\Extensions\ContainerPostponeExtensions.cs                                   14              0             71
+..\FactorIt\Extensions\ObjectExtensions.cs                                               5              7             46
+..\FactorIt\Extensions\ContainerFirstExtensions.cs                                      10              0             45
+..\FactorIt\RegistrationKey.cs                                                           7              4             43
+..\FactorIt\Patterns\Keys.cs                                                             8              0             40
+..\FactorIt.Tests\GivenEmptyContainer.cs                                                10              0             38
+..\FactorIt\Extensions\ContainerContainsExtensions.cs                                    6              0             35
+..\FactorIt\BindingSyntax.cs                                                            10              0             33
+..\FactorIt\Extensions\ContainerDisposeExtensions.cs                                     6              1             27
+..\FactorIt\Registration.cs                                                              7              0             27
+..\FactorIt\PosponedAction.cs                                                            6              0             26
+..\FactorIt\Extensions\ContainerRegisterExtensions.cs                                    4              0             20
+..\FactorIt\Patterns\Disposables.cs                                                      4              3             17
+..\FactorIt.WinPRT\Properties\AssemblyInfo.cs                                            4             16             17
+..\FactorIt\Properties\AssemblyInfo.cs                                                   9             17             16
+..\FactorIt.Tests\Properties\AssemblyInfo.cs                                             4             17             15
+..\FactorIt\Scope.cs                                                                     3              0             15
+..\FactorIt\Extensions\EnumerableExtensions.cs                                           1              0             15
+..\FactorIt.WPF\Properties\AssemblyInfo.cs                                               4             17             15
+..\FactorIt.WinRT\Properties\AssemblyInfo.cs                                             2             13             14
+..\FactorIt\Contracts\IServiceLocator.cs                                                 1              0             13
+..\FactorIt\Extensions\ContainerNodeExtensions.cs                                        1              0             12
+..\FactorIt\Extensions\BindingRootExtensions.cs                                          1              0             12
+..\FactorIt\Contracts\IContainerNode.cs                                                  2              0             11
+..\FactorIt.WinRT\Helpers\ExcludeFromCodeCoverageAttribute.WinRT.cs                      0              7             11
+..\FactorIt\Contracts\IBindingIntercept.cs                                               2              0             10
+..\FactorIt\Collections\Wrappers\ReplaceCollectionChangedEventArgs.cs                    1              0             10
+..\FactorIt\Collections\Wrappers\ResetCollectionChangedEventArgs.cs                      1              0             10
+..\FactorIt\Collections\Wrappers\AddCollectionChangedEventArgs.cs                        1              0             10
+..\FactorIt\Contracts\IBindingTo.cs                                                      1              0             10
+..\FactorIt\Collections\Wrappers\RemoveCollectionChangedEventArgs.cs                     1              0             10
+..\FactorIt\Contracts\IContainer.cs                                                      1              0              9
+..\FactorIt\Patterns\Singletons.cs                                                       0              0              8
+..\FactorIt\Contracts\IRegistration.cs                                                   0              0              8
+..\FactorIt\Contracts\IBindingRoot.cs                                                    0              0              8
+..\AppMultiPackages.xml                                                                  0              0              6
+..\Tools\Clockr.bat                                                                      0              0              2
+------------------------------------------------------------------------------------------------------------------------
+SUM:                                                                                   536            604           2715
+------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+C#                              42            536            569           1980
+MSBuild scripts                  5              0             35            727
+XML                              1              0              0              6
+DOS Batch                        1              0              0              2
+-------------------------------------------------------------------------------
+SUM:                            49            536            604           2715
+-------------------------------------------------------------------------------

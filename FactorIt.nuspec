@@ -10,8 +10,8 @@
         <description>An ultra light-weight dependency injection container built around the power of factories.</description>
     </metadata>
     <files>
-        <file src="WPF\FactorIt.WPF\Release\FactorIt.WPF.dll" target="lib\net45\FactorIt.WPF.dll" />
-        <file src="WinRT\FactorIt.WinRT\Release\FactorIt.WinRT.dll" target="lib\netcore451\FactorIt.WinRT.dll" />
-        <file src="WinPRT\FactorIt.WinPRT\Release\FactorIt.WinPRT.dll" target="lib\wp8\FactorIt.WinPRT.dll" />
+        <file src="FactorIt.WPF\bin\Release\FactorIt.WPF.dll" target="lib\net45\FactorIt.WPF.dll" />
+        <file src="FactorIt.WinRT\bin\Release\FactorIt.WinRT.dll" target="lib\netcore451\FactorIt.WinRT.dll" />
+        <file src="FactorIt.WinPRT\bin\Release\FactorIt.WinPRT.dll" target="lib\wp8\FactorIt.WinPRT.dll" />
     </files>
 </package>

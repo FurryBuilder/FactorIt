@@ -15,7 +15,12 @@ Abstract
 
 FactorIt is cross-platform dependency injection made easy. This DI container is based on standard containers and exposes its features through a set of generic and lambda oriented methods that works together using a simple fluent interface. Its main goal is to stay as unobtrusive as possible. It needs very little configuration to get started and to inject dependencies. Even on a large scale or when using advanced features. No hacks. No magic. Just fast and portable.
 
-**[FactorIt is also on NuGet!](https://www.nuget.org/packages/FactorIt/ "Click here to see the latest NuGet package")**
+
+Goodies
+-------
+
+- FactorIt is also available on [NuGet!](https://www.nuget.org/packages/FactorIt/ "Click here to see the latest NuGet package")
+- Need some C++ love? Take a look at our C++ port: [FactorIt++](https://github.com/FurryBuilder/FactorItpp)
 
 Basic Scenarios
 -------------------

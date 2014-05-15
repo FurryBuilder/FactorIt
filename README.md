@@ -104,14 +104,19 @@ When using child containers, resolving services becomes a lot more powerful. The
     container.Resolve<IService>(Scope.Downward);        // Parent + Local
     container.Postpone<IService>(Scope.Upward, ...);    // Local + Children
 
-These are just two examples of the possible policies that can be provided when dealing with child containers.
+These are just two examples of the possible policies that can be provided when dealing with child containers. You can also limit the accessibility of services at configuration time by using multiple container branches.
+
+    var r = Container.CreateRoot();
+    var sensitive = Container.CreateWithParent(r);
+    var freeforall = Container.CreateWithParent(r);
+
+Using this technique, even if child containers are created under the freeforall container, and no matter how wide the scope resolving rules are, no one will ever be able to access the sensitive services. This is perfect when exposing a plugin structure where only the API facing services needs to be accessible.
 
 ### Cleanup
-Finally, the most powerful feature of this container is its ability to cleanup after itself. If a registered service implements the `IDisposable` interface, it will call the `Dispose` method of this service. It will also dispose all child containers automatically so you only need to call `Dispose` on the root container.
+Finally, probably the coolest feature of this container is its ability to cleanup after itself. If a registered service implements the `IDisposable` interface, it will call the `Dispose` method on this service. This will only happen if the service has been resolved at least once. It will also dispose all child containers automatically so you only need to call `Dispose` on the root container. Currently, services are disposed in no particular order within containers and containers are disposed one child branch at a time. Take a look at the pipeline section to see what's comming up!
+
 
 Pipeline
 --------
 
-In the pipeline, we plan on adding support for scoped container and binding that will enforce scope resolution at configuration time instead of resolve time. This will enable new security scenarios that are not currently supported. In the mean time, you can always use a "public services" container branch and a "private services" container branch.
-
-We also plan on greatly improving the cleanup procedure by adding a system to detect service dependencies. This will enable automatic disposal of dependent services and will correctly call the `Dispose` method in the right order. Currently, services are disposed in no particular order.
+In the pipeline, we plan on greatly improving the cleanup procedure by adding a system to detect service dependencies. This will enable automatic disposal of dependent services and will correctly call the `Dispose` method in their dependent order across containers.

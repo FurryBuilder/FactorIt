@@ -2,7 +2,7 @@
 
 namespace FactorIt.Collections.Wrappers
 {
-	public class ResetCollectionChangedEventArgs : NotifyCollectionChangedEventArgs
+	internal class ResetCollectionChangedEventArgs : NotifyCollectionChangedEventArgs
 	{
 		public ResetCollectionChangedEventArgs()
 			: base(NotifyCollectionChangedAction.Reset)

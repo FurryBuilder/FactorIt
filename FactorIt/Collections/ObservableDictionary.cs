@@ -16,7 +16,7 @@ namespace FactorIt.Collections
 	/// </summary>
 	/// <typeparam name="TKey">The type of the key in the dictionary</typeparam>
 	/// <typeparam name="TValue">The type of the values in the dictionary</typeparam>
-	public class ObservableDictionary<TKey, TValue> :
+	internal class ObservableDictionary<TKey, TValue> :
 		IDictionary<TKey, TValue>,
 		ICollection<KeyValuePair<TKey, TValue>>,
 		IDictionary,

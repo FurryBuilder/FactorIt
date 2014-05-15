@@ -2,7 +2,7 @@
 
 namespace FactorIt.Collections.Wrappers
 {
-	public class AddCollectionChangedEventArgs : NotifyCollectionChangedEventArgs
+	internal class AddCollectionChangedEventArgs : NotifyCollectionChangedEventArgs
 	{
 		public AddCollectionChangedEventArgs(object item, int index)
 			: base(NotifyCollectionChangedAction.Add, item, index)

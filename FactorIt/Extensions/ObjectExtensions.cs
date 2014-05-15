@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FactorIt.Extensions
 {
-	public static class ObjectExtensions
+	internal static class ObjectExtensions
 	{
 		public static bool IsNullOrDefault<TSource>([CanBeNull] this TSource source, [CanBeNull] IEqualityComparer<TSource> valueTypeComparer = null)
 		{

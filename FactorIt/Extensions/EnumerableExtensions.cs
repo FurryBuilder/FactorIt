@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FactorIt.Extensions
 {
-	public static class EnumerableExtensions
+	internal static class EnumerableExtensions
 	{
 		public static TValue FirstOrDefault<TKey, TValue>([NotNull] this IEnumerable<KeyValuePair<TKey, TValue>> source, [NotNull] IEqualityComparer<TKey> comparer, [CanBeNull] TKey needle)
 		{

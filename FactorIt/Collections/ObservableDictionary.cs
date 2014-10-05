@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 
 using FactorIt.Collections.Wrappers;
-using FactorIt.Extensions;
+using FluffIt;
 
 namespace FactorIt.Collections
 {

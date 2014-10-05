@@ -25,7 +25,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using FactorIt.Contracts;
-using FactorIt.Extensions;
+using FluffIt;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FactorIt.Tests

@@ -173,12 +173,6 @@
     <Compile Include="..\FactorIt\Extensions\ContainerRegisterExtensions.cs">
       <Link>Extensions\ContainerRegisterExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\FactorIt\Extensions\EnumerableExtensions.cs">
-      <Link>Extensions\EnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\FactorIt\Extensions\ObjectExtensions.cs">
-      <Link>Extensions\ObjectExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\FactorIt\Extensions\ServiceLocatorExtensions.cs">
       <Link>Extensions\ServiceLocatorExtensions.cs</Link>
     </Compile>
@@ -203,7 +197,14 @@
     <Compile Include="Helpers\ExcludeFromCodeCoverageAttribute.WinRT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="FluffIt.WinRT">
+      <HintPath>..\packages\FluffIt.0.1.0.1\lib\netcore451\FluffIt.WinRT.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

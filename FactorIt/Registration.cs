@@ -26,8 +26,8 @@
 
 using System;
 
-using FactorIt.Extensions;
 using FactorIt.Contracts;
+using FluffIt;
 
 namespace FactorIt
 {

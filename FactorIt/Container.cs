@@ -29,6 +29,7 @@ using System.Collections.Generic;
 
 using FactorIt.Extensions;
 using FactorIt.Contracts;
+using FluffIt;
 
 namespace FactorIt
 {

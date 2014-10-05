@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluffIt.WPF">
+      <HintPath>..\packages\FluffIt.0.1.0.1\lib\net45\FluffIt.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -68,8 +71,6 @@
     <Compile Include="RegistrationKey.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="Patterns\Keys.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Patterns\Singletons.cs" />
     <Compile Include="Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,7 +78,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="..\FactorIt.Common.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

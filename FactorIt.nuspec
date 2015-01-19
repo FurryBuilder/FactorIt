@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>FactorIt</id>
-        <version>0.1.0.1</version>
+        <version>0.0.0.0-alpha</version>
         <title>FactorIt</title>
         <authors>Furry Builder</authors>
         <owners>Furry Builder</owners>

@@ -1,4 +1,4 @@
-FactorIt
+FactorIt [![teamcity build status][teamcity-status]][teamcity-build]
 ========
 
 ### Dependency Injection (DI)
@@ -149,3 +149,6 @@ Pipeline
 --------
 
 In the pipeline, we plan on greatly improving the cleanup procedure by adding a system to detect service dependencies. This will enable automatic disposal of dependent services and will correctly call the `Dispose` method in their dependent order across containers.
+
+[teamcity-status]: http://teamcity.furrybuilder.com/app/rest/builds/buildType:(id:FurryBuilder_FactorIt_Dev)/statusIcon
+[teamcity-build]:  http://teamcity.furrybuilder.com/viewType.html?buildTypeId=FurryBuilder_FactorIt_Dev

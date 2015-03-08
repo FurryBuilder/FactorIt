@@ -26,6 +26,7 @@
 
 using System;
 using FactorIt.Patterns;
+using JetBrains.Annotations;
 
 namespace FactorIt
 {

@@ -26,6 +26,7 @@
 
 using FactorIt.Contracts;
 using FluffIt;
+using JetBrains.Annotations;
 
 namespace FactorIt.Extensions
 {

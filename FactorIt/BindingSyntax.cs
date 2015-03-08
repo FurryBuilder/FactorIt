@@ -26,6 +26,7 @@
 
 using System;
 using FactorIt.Contracts;
+using JetBrains.Annotations;
 
 namespace FactorIt
 {

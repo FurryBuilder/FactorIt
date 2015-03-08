@@ -28,12 +28,32 @@ using System.Collections.Generic;
 
 namespace FactorIt.Contracts
 {
-	public interface IContainerNode
-	{
-		IContainer Parent { get; }
-		ISet<IContainer> Children { get; }
+    /// <summary>
+    ///     System interface that represents a container within a hierarchy of
+    ///     containers. Can be used to query a container's neiborhood for low
+    ///     level operations. Prefer the use of specialized interfaces and
+    ///     extention methods to operate on the container.
+    /// </summary>
+    public interface IContainerNode
+    {
+        /// <summary>
+        ///     The parent container.
+        /// </summary>
+        IContainer Parent { get; }
 
-		void RegisterOnParent();
-		void UnregisterFromParent();
-	}
+        /// <summary>
+        ///     All child containers.
+        /// </summary>
+        ISet<IContainer> Children { get; }
+
+        /// <summary>
+        ///     Registers the current container node as one of its parent's children.
+        /// </summary>
+        void RegisterOnParent();
+
+        /// <summary>
+        ///     Unregisters the current ocntainer node from its parent's children.
+        /// </summary>
+        void UnregisterFromParent();
+    }
 }

@@ -28,10 +28,21 @@ using System;
 
 namespace FactorIt.Contracts
 {
-	public interface IBindingTo<TContract>
-		where TContract : class
-	{
-		IBindingIntercept<TContract> To<TService>([NotNull] Func<IServiceLocator, TService> factory)
-			where TService : TContract;
-	}
+    /// <summary>
+    /// Second step in the fluent binding flow. Associated a service factory to
+    /// a specific contract.
+    /// </summary>
+    /// <typeparam name="TContract">Type of the bound contract.</typeparam>
+    public interface IBindingTo<TContract>
+        where TContract : class
+    {
+        /// <summary>
+        /// Associate a service to an entry (contract and key pair) in the container.
+        /// </summary>
+        /// <typeparam name="TService">Type of the service to associate</typeparam>
+        /// <param name="factory">Factory used when creating an instance of the service.</param>
+        /// <returns>An object to handle the next step in the binding flow.</returns>
+        IBindingIntercept<TContract> To<TService>([NotNull] Func<IServiceLocator, TService> factory)
+            where TService : TContract;
+    }
 }

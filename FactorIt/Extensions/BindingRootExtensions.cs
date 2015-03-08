@@ -28,12 +28,17 @@ using FactorIt.Contracts;
 
 namespace FactorIt.Extensions
 {
-	public static class BindingRootExtensions
-	{
-		public static IBindingTo<TContract> Bind<TContract>([NotNull] this IBindingRoot source)
-			where TContract : class
-		{
-			return source.Bind<TContract>(null);
-		}
-	}
+    public static class BindingRootExtensions
+    {
+        /// <summary>
+        /// Provides a way to associate a specified contract to a service factory.
+        /// </summary>
+        /// <typeparam name="TContract">The type of the contract to bind</typeparam>
+        /// <returns>An object to handle the next step in the binding flow.</returns>
+        public static IBindingTo<TContract> Bind<TContract>([NotNull] this IBindingRoot bindingRoot)
+            where TContract : class
+        {
+            return bindingRoot.Bind<TContract>(null);
+        }
+    }
 }

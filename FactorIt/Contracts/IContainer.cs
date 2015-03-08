@@ -28,9 +28,23 @@ using System.Collections.Generic;
 
 namespace FactorIt.Contracts
 {
-	public interface IContainer : IContainerNode
-	{
-		IDictionary<RegistrationKey, IRegistration> Registrations { get; }
-		IDictionary<RegistrationKey, PostponedAction> PostponedActions { get; }
-	}
+    /// <summary>
+    ///     System interface used to represent a single container. Can be used to
+    ///     query the container directly for low level operations. Prefer the use
+    ///     of specialized interfaces and extension methods to operate on the
+    ///     container.
+    /// </summary>
+    public interface IContainer : IContainerNode
+    {
+        /// <summary>
+        ///     List of all registrations inside the container.
+        /// </summary>
+        IDictionary<RegistrationKey, IRegistration> Registrations { get; }
+
+        /// <summary>
+        ///     List of all postponed actions inside the container that will be
+        ///     executed as new elements gets registered.
+        /// </summary>
+        IDictionary<RegistrationKey, PostponedAction> PostponedActions { get; }
+    }
 }

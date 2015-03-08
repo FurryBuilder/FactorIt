@@ -25,26 +25,37 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Contracts;
 using FluffIt;
 
 namespace FactorIt.Extensions
 {
-	public static class ContainerRegisterExtensions
-	{
-		public static void Register([NotNull] this IContainer source, [NotNull] RegistrationKey key, [NotNull] IRegistration registration)
-		{
-			if (source.Registrations.ContainsKey(key))
-			{
-				throw new InvalidOperationException(string.Format(Container.Constants.ContractAlreadyRegistered, key));
-			}
+    public static class ContainerRegisterExtensions
+    {
+        /// <summary>
+        /// Adds a registration to a container and bind it to a registration key.
+        /// </summary>
+        /// <param name="container">The container to update</param>
+        /// <param name="key">The key to use for this registration</param>
+        /// <param name="registration">The registration to store in the container</param>
+        /// <exception cref="InvalidOperationException">The key is already present within the container.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+        /// <exception cref="NotSupportedException">The <see cref="T:System.Collections.Generic.IDictionary`2" /> is read-only.</exception>
+        public static void Register(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key,
+            [NotNull] IRegistration registration)
+        {
+            if (container.Registrations.ContainsKey(key))
+            {
+                throw new InvalidOperationException(string.Format(Container.Constants.ContractAlreadyRegistered, key));
+            }
 
-			source.Registrations.Add(key, registration);
+            container.Registrations.Add(key, registration);
 
-			source.PostponedActions
-				.FirstOrDefault(RegistrationKey.Comparer.Default, key)
-				.Maybe(a => a.Invoke(registration.Value));
-		}
-	}
+            container.PostponedActions
+                .FirstOrDefault(RegistrationKey.Comparer.Default, key)
+                .Maybe(a => a.Invoke(registration.Value));
+        }
+    }
 }

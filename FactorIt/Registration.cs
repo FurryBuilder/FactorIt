@@ -25,36 +25,46 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Contracts;
 using FluffIt;
 
 namespace FactorIt
 {
-	public class Registration<TContract> : IRegistration
-		where TContract : class
-	{
-		private readonly Lazy<object> _registration;
+    /// <summary>
+    /// A single entry inside the container.
+    /// </summary>
+    /// <typeparam name="TContract">Type of the contract represented by this entry.</typeparam>
+    public class Registration<TContract> : IRegistration
+        where TContract : class
+    {
+        private readonly Lazy<object> _registration;
+        private Func<TContract, TContract> _decorator;
+        private Func<TContract> _factory;
 
-		private Func<TContract> _factory;
-		private Func<TContract, TContract> _decorator;
+        internal Registration()
+        {
+            _registration =
+                new Lazy<object>(() => _decorator.SelectOrDefault(d => d.Invoke(_factory.Invoke()), _factory.Invoke()));
+        }
 
-		public Registration()
-		{
-			_registration = new Lazy<object>(() => _decorator.SelectOrDefault(d => d.Invoke(_factory.Invoke()), _factory.Invoke()));
-		}
+        public object Value
+        {
+            get { return _registration.Value; }
+        }
 
-		public void Source([NotNull] Func<TContract> factory)
-		{
-			_factory = factory;
-		}
+        public bool IsValueCreated
+        {
+            get { return _registration.IsValueCreated; }
+        }
 
-		public void Decorate([NotNull] Func<TContract, TContract> decorator)
-		{
-			_decorator = decorator;
-		}
+        internal void Source([NotNull] Func<TContract> factory)
+        {
+            _factory = factory;
+        }
 
-		public object Value { get { return _registration.Value; } }
-		public bool IsValueCreated { get { return _registration.IsValueCreated; } }
-	}
+        internal void Decorate([NotNull] Func<TContract, TContract> decorator)
+        {
+            _decorator = decorator;
+        }
+    }
 }

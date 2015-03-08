@@ -25,45 +25,47 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Contracts;
 
 namespace FactorIt
 {
-	public class BindingSyntax<TContract> : IBindingTo<TContract>, IBindingIntercept<TContract>
-		where TContract : class
-	{
-		private readonly IServiceLocator _serviceLocator;
-		private readonly Action<IRegistration> _register;
+    /// <summary>
+    /// Handles contract binding and interception.
+    /// </summary>
+    /// <typeparam name="TContract">The type of contract to bind and intercept.</typeparam>
+    public class BindingSyntax<TContract> : IBindingTo<TContract>, IBindingIntercept<TContract>
+        where TContract : class
+    {
+        private readonly Action<IRegistration> _register;
+        private readonly Registration<TContract> _registration;
+        private readonly IServiceLocator _serviceLocator;
 
-		private readonly Registration<TContract> _registration;
+        internal BindingSyntax([NotNull] IServiceLocator serviceLocator, [NotNull] Action<IRegistration> register)
+        {
+            _serviceLocator = serviceLocator;
+            _register = register;
 
-		public BindingSyntax([NotNull] IServiceLocator serviceLocator, [NotNull] Action<IRegistration> register)
-		{
-			_serviceLocator = serviceLocator;
-			_register = register;
+            _registration = new Registration<TContract>();
+        }
 
-			_registration = new Registration<TContract>();
-		}
+        public void Decorate([NotNull] Func<TContract, TContract> decorator)
+        {
+            _registration.Decorate(decorator);
+        }
 
-		public IBindingIntercept<TContract> To<TService>([NotNull] Func<IServiceLocator, TService> factory)
-			where TService : TContract
-		{
-			_registration.Source(() => factory.Invoke(_serviceLocator));
+        public void Decorate([NotNull] Func<IServiceLocator, TContract, TContract> factory)
+        {
+            _registration.Decorate(c => factory.Invoke(_serviceLocator, c));
+        }
 
-			_register.Invoke(_registration);
+        public IBindingIntercept<TContract> To<TService>([NotNull] Func<IServiceLocator, TService> factory)
+            where TService : TContract
+        {
+            _registration.Source(() => factory.Invoke(_serviceLocator));
 
-			return this;
-		}
+            _register.Invoke(_registration);
 
-		public void Decorate([NotNull] Func<TContract, TContract> decorator)
-		{
-			_registration.Decorate(decorator);
-		}
-
-		public void Decorate([NotNull] Func<IServiceLocator, TContract, TContract> factory)
-		{
-			_registration.Decorate(c => factory.Invoke(_serviceLocator, c));
-		}
-	}
+            return this;
+        }
+    }
 }

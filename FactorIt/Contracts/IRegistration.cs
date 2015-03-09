@@ -26,9 +26,19 @@
 
 namespace FactorIt.Contracts
 {
-	public interface IRegistration
-	{
-		object Value { get; }
-		bool IsValueCreated { get; }
-	}
+    /// <summary>
+    /// A specific entry inside the container.
+    /// </summary>
+    public interface IRegistration
+    {
+        /// <summary>
+        /// The value associated to a registration once it has been initialized.
+        /// </summary>
+        object Value { get; }
+
+        /// <summary>
+        /// Tracks wether the registration has been initialized or not.
+        /// </summary>
+        bool IsValueCreated { get; }
+    }
 }

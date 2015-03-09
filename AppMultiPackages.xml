@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<NuGetterPackages>
-	<NuGetterPackage name="FactorIt">
-		<NuSpecFilePath>FactorIt\FactorIt.nuspec</NuSpecFilePath>
-	</NuGetterPackage>
-</NuGetterPackages>

@@ -25,57 +25,76 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Contracts;
 using FluffIt;
+using JetBrains.Annotations;
 
 namespace FactorIt.Extensions
 {
-	public static class ContainerFirstExtensions
-	{
-		public static IRegistration First([NotNull] this IContainer source, [NotNull] RegistrationKey key, Scope scope)
-		{
-			if (scope.HasFlag(Scope.Local) && source.ContainsLocal(key))
-			{
-				return source.FirstLocal(key);
-			}
+    public static class ContainerFirstExtensions
+    {
+        /// <summary>
+        /// Returns the first registration matching the specified key and
+        /// within the provided scope.
+        /// </summary>
+        /// <param name="container">The container to use as the entry to the hierarchy</param>
+        /// <param name="key">The registration key to look for</param>
+        /// <param name="scope">The scope in which the key will be looked for</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">No contract matching the provided key and within the specified scope can be found on this container.</exception>
+        public static IRegistration First([NotNull] this IContainer container, [NotNull] RegistrationKey key, Scope scope)
+        {
+            if (scope.HasFlag(Scope.Local) && container.ContainsLocal(key))
+            {
+                return container.FirstLocal(key);
+            }
 
-			if (scope.HasFlag(Scope.Parent) && source.ContainsParent(key))
-			{
-				return source.FirstParent(key);
-			}
+            if (scope.HasFlag(Scope.Parent) && container.ContainsParent(key))
+            {
+                return container.FirstParent(key);
+            }
 
-			if (scope.HasFlag(Scope.Children) && source.ContainsChildren(key))
-			{
-				return source.FirstChildren(key);
-			}
+            if (scope.HasFlag(Scope.Children) && container.ContainsChildren(key))
+            {
+                return container.FirstChildren(key);
+            }
 
-			throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
-		}
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
+        }
 
-		private static IRegistration FirstParent([NotNull] this IContainer source, [NotNull] RegistrationKey key)
-		{
-			return source.Parent.SelectOrDefault(p => p.ContainsLocal(key) ? p.FirstLocal(key) : p.FirstParent(key));
-		}
+        private static IRegistration FirstParent([NotNull] this IContainerNode container, [NotNull] RegistrationKey key)
+        {
+            if (container.Parent != null)
+            {
+                return container.Parent.ContainsLocal(key)
+                    ? container.Parent.FirstLocal(key)
+                    : container.Parent.FirstParent(key);
+            }
 
-		private static IRegistration FirstLocal([NotNull] this IContainer source, [NotNull] RegistrationKey key)
-		{
-			return source.Registrations[key];
-		}
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
+        }
 
-		private static IRegistration FirstChildren([NotNull] this IContainer source, [NotNull] RegistrationKey key)
-		{
-			foreach (var c in source.Children)
-			{
-				if (c.ContainsLocal(key))
-				{
-					return c.FirstLocal(key);
-				}
+        private static IRegistration FirstLocal([NotNull] this IContainer container, [NotNull] RegistrationKey key)
+        {
+            IRegistration registration;
+            if (container.Registrations.TryGetValue(key, out registration))
+            {
+                return registration;
+            }
 
-				return c.FirstChildren(key);
-			}
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
+        }
 
-			throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
-		}
-	}
+        private static IRegistration FirstChildren([NotNull] this IContainerNode container, [NotNull] RegistrationKey key)
+        {
+            foreach (var c in container.Children)
+            {
+                return c.ContainsLocal(key)
+                    ? c.FirstLocal(key)
+                    : c.FirstChildren(key);
+            }
+
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
+        }
+    }
 }

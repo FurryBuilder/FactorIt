@@ -24,11 +24,23 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
+using JetBrains.Annotations;
+
 namespace FactorIt.Contracts
 {
-	public interface IBindingRoot
-	{
-		IBindingTo<TContract> Bind<TContract>([CanBeNull] string key)
-			where TContract : class;
-	}
+    /// <summary>
+    /// Provides high level binding operations on an associated container. First
+    /// step in the container's fluent binding flow.
+    /// </summary>
+    public interface IBindingRoot
+    {
+        /// <summary>
+        /// Provides a way to associate a specified contract and key to a service factory.
+        /// </summary>
+        /// <typeparam name="TContract">The type of the contract to bind</typeparam>
+        /// <param name="key">A grouping identifier to differenciate different services using the same bound contract.</param>
+        /// <returns>An object to handle the next step in the binding flow.</returns>
+        IBindingTo<TContract> Bind<TContract>([CanBeNull] string key)
+            where TContract : class;
+    }
 }

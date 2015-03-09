@@ -25,56 +25,71 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Patterns;
+using JetBrains.Annotations;
 
 namespace FactorIt
 {
-	/// <summary>
-	/// Represent a registration in a dictionary based on a type of contract
-	/// and a sub-set key.
-	/// </summary>
-	public class RegistrationKey : KeyBase<RegistrationKey>
-	{
-		public class Comparer : KeyComparerBase<Comparer>
-		{
-			public override bool Equals([CanBeNull] RegistrationKey x, [CanBeNull] RegistrationKey y)
-			{
-				return
-					string.Equals(x.Key, y.Key) &&
-					x.Type == y.Type;
-			}
+    /// <summary>
+    ///     Represent a registration in a dictionary based on a type of contract
+    ///     and a sub-set key.
+    /// </summary>
+    public class RegistrationKey : KeyBase<RegistrationKey>
+    {
+        private RegistrationKey([CanBeNull] string key, [NotNull] Type type)
+        {
+            Key = key;
+            Type = type;
+        }
 
-			public override int GetHashCode([CanBeNull] RegistrationKey obj)
-			{
-				unchecked
-				{
-					return
-						((obj.Key != null ? obj.Key.GetHashCode() : 0) * 397) ^
-						obj.Type.GetHashCode();
-				}
-			}
-		}
+        public string Key { get; private set; }
+        public Type Type { get; private set; }
 
-		public string Key { get; private set; }
-		public Type Type { get; private set; }
+        public static RegistrationKey From<T>([CanBeNull] string key)
+        {
+            return new RegistrationKey(key, typeof (T));
+        }
 
-		private RegistrationKey([CanBeNull] string key, [NotNull] Type type)
-		{
-			Key = key;
-			Type = type;
-		}
+        protected override string GetStringValues()
+        {
+            return
+                "Key=\"" + Key + "\", " +
+                "Type=\"" + Type + "\"";
+        }
 
-		public static RegistrationKey From<T>([CanBeNull] string key)
-		{
-			return new RegistrationKey(key, typeof(T));
-		}
+        public class Comparer : KeyComparerBase<Comparer>
+        {
+            public override bool Equals([CanBeNull] RegistrationKey x, [CanBeNull] RegistrationKey y)
+            {
+                if (x == null && y != null)
+                {
+                    return false;
+                }
 
-		protected override string GetStringValues()
-		{
-			return
-				"Key=\"" + Key + "\", " +
-				"Type=\"" + Type + "\"";
-		}
-	}
+                if (x != null && y == null)
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(x, y))
+                {
+                    return true;
+                }
+
+                return
+                    string.Equals(x.Key, y.Key) &&
+                    x.Type == y.Type;
+            }
+
+            public override int GetHashCode([NotNull] RegistrationKey obj)
+            {
+                unchecked
+                {
+                    return
+                        ((obj.Key != null ? obj.Key.GetHashCode() : 0) * 397) ^
+                        obj.Type.GetHashCode();
+                }
+            }
+        }
+    }
 }

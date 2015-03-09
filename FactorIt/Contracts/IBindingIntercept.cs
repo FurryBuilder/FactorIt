@@ -25,14 +25,27 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using JetBrains.Annotations;
 
 namespace FactorIt.Contracts
 {
-	public interface IBindingIntercept<TContract>
-		where TContract : class
-	{
-		void Decorate([NotNull] Func<TContract, TContract> factory);
+    /// <summary>
+    /// Third step in the fluent binding flow. Customize the binding properties.
+    /// </summary>
+    /// <typeparam name="TContract"></typeparam>
+    public interface IBindingIntercept<TContract>
+        where TContract : class
+    {
+        /// <summary>
+        /// Adds an interception point to the resolving process of a contract.
+        /// </summary>
+        /// <param name="factory">Factory that decorates a provided instance</param>
+        void Decorate([NotNull] Func<TContract, TContract> factory);
 
-		void Decorate([NotNull] Func<IServiceLocator, TContract, TContract> factory);
-	}
+        /// <summary>
+        /// Adds an interception point to the resolving process of a contract.
+        /// </summary>
+        /// <param name="factory">Factory that decorates a provided instance</param>
+        void Decorate([NotNull] Func<IServiceLocator, TContract, TContract> factory);
+    }
 }

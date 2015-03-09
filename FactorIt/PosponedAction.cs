@@ -26,33 +26,40 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace FactorIt
 {
-	public class PostponedAction
-	{
-		private readonly Action _cleanup;
+    /// <summary>
+    /// A set of postponed actions for an entry in the container.
+    /// </summary>
+    public class PostponedAction
+    {
+        private readonly List<Action<object>> _actions = new List<Action<object>>();
+        private readonly Action _cleanup;
 
-		private readonly List<Action<object>> _actions = new List<Action<object>>();
+        internal PostponedAction([NotNull] Action cleanup)
+        {
+            _cleanup = cleanup;
+        }
 
-		public PostponedAction([NotNull] Action cleanup)
-		{
-			_cleanup = cleanup;
-		}
+        /// <summary>
+        /// Adds a callback to execute once the postponed action is invoked.
+        /// </summary>
+        /// <param name="callback">The callback.</param>
+        public void Postpone([NotNull] Action<object> callback)
+        {
+            _actions.Add(callback);
+        }
 
-		public void Postpone([NotNull] Action<object> callback)
-		{
-			_actions.Add(callback);
-		}
+        internal void Invoke([NotNull] object value)
+        {
+            foreach (var a in _actions)
+            {
+                a.Invoke(value);
+            }
 
-		public void Invoke([NotNull] object value)
-		{
-			foreach (var a in _actions)
-			{
-				a.Invoke(value);
-			}
-
-			_cleanup.Invoke();
-		}
-	}
+            _cleanup.Invoke();
+        }
+    }
 }

@@ -26,49 +26,68 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace FactorIt.Patterns
 {
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable", Justification = "Not using built it serialization to stay cross-platform friendly")]
-	public class RequireEqualityComparerException<TSelf> : Exception
-	{
-		public static class Constants
-		{
-			public const string UseEqualityComparer = "An IEqualityComparer implementation is available for the type: {0} and must be used instead.";
-		}
+    [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable",
+        Justification = "Not using built-in serialization to stay cross-platform friendly")]
+    public class RequireEqualityComparerException<TSelf> : Exception
+    {
+        public RequireEqualityComparerException()
+            : base(string.Format(Constants.UseEqualityComparer, typeof (TSelf).FullName))
+        {
+        }
 
-		public RequireEqualityComparerException()
-			: base(string.Format(Constants.UseEqualityComparer, typeof(TSelf).FullName))
-		{ }
-	}
+        public static class Constants
+        {
+            public const string UseEqualityComparer =
+                "An IEqualityComparer implementation is available for the type: {0} and must be used instead.";
+        }
+    }
 
-	public abstract class KeyBase<TKey>
-	{
-		public abstract class KeyComparerBase<TComparer> : DefaultProvider<TComparer>, IEqualityComparer<TKey>
-			where TComparer : new()
-		{
-			public abstract bool Equals([NotNull] TKey x, [NotNull] TKey y);
+    /// <summary>
+    /// Base class for a key pattern that can be used inside collections to
+    /// uniquely identify elements.
+    /// </summary>
+    /// <typeparam name="TKey">Type of the key</typeparam>
+    public abstract class KeyBase<TKey>
+    {
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations",
+            Justification =
+                "The Key pattern requires the use of an IEqualityComparer. Equals should never be called directly"
+            )]
+        public override bool Equals([NotNull] object obj)
+        {
+            throw new RequireEqualityComparerException<TKey>();
+        }
 
-			public abstract int GetHashCode([NotNull] TKey obj);
-		}
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations",
+            Justification =
+                "The Key patterns requires the use of an IEqualityComparer. GetHashCode should never be called directly"
+            )]
+        public override int GetHashCode()
+        {
+            throw new RequireEqualityComparerException<TKey>();
+        }
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "The Key pattern requires the use of an IEqualityComparer. Equals should never be called directly")]
-		public override bool Equals([NotNull] object obj)
-		{
-			throw new RequireEqualityComparerException<TKey>();
-		}
+        protected abstract string GetStringValues();
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "The Key patterns requires the use of an IEqualityComparer. GetHashCode should never be called directly")]
-		public override int GetHashCode()
-		{
-			throw new RequireEqualityComparerException<TKey>();
-		}
+        public override string ToString()
+        {
+            return GetStringValues();
+        }
 
-		protected abstract string GetStringValues();
-
-		public override string ToString()
-		{
-			return GetStringValues();
-		}
-	}
+        /// <summary>
+        /// Base class for all key comparers.
+        /// </summary>
+        /// <typeparam name="TComparer">Type of the specialized comparer.</typeparam>
+        public abstract class KeyComparerBase<TComparer> : DefaultProvider<TComparer>, IEqualityComparer<TKey>
+            where TComparer : new()
+        {
+            public abstract bool Equals([NotNull] TKey x, [NotNull] TKey y);
+            public abstract int GetHashCode([NotNull] TKey obj);
+        }
+    }
 }

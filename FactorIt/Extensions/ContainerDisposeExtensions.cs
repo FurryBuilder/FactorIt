@@ -26,35 +26,33 @@
 
 using System;
 using System.Linq;
-
 using FactorIt.Contracts;
 using FluffIt;
+using JetBrains.Annotations;
 
 namespace FactorIt.Extensions
 {
-	public static class ContainerDisposeExtensions
-	{
-		// TODO: Use a special ServiceLocator instance to track all Resolve call to build a dependency tree that will be used to dispose services.
-		public static void Dispose([NotNull] this IContainer source)
-		{
-			var disposables = source.Registrations
-				.Select(registration => registration.Value.SelectOrDefault(v => v.IsValueCreated ? v.Value : null))
-				.OfType<IDisposable>();
+    public static class ContainerDisposeExtensions
+    {
+        /// <summary>
+        /// Dispose all services associated to the container.
+        /// </summary>
+        /// <param name="container">The container to dispose</param>
+        public static void Dispose([NotNull] this IContainer container)
+        {
+            // TODO: Use a special ServiceLocator instance to track all Resolve call to build a dependency tree that will be used to dispose services.
 
-			foreach (var disposable in disposables)
-			{
-				disposable.Dispose();
-			}
-			
-			source.Registrations.Clear();
-			source.PostponedActions.Clear();
+            container.Registrations
+                .Select(registration => registration.Value.SelectOrDefault(v => v.IsValueCreated ? v.Value : null))
+                .OfType<IDisposable>()
+                .ForEach(d => d.Dispose());
 
-			source.UnregisterFromParent();
+            container.Registrations.Clear();
+            container.PostponedActions.Clear();
 
-			foreach (var child in source.Children)
-			{
-				child.Dispose();
-			}
-		}
-	}
+            container.As<IContainerNode>().UnregisterFromParent();
+
+            container.Children.ForEach(c => c.Dispose());
+        }
+    }
 }

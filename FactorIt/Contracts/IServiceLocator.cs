@@ -25,16 +25,46 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using JetBrains.Annotations;
 
 namespace FactorIt.Contracts
 {
-	public interface IServiceLocator
-	{
-		bool CanResolve<TContract>([CanBeNull] string key, Scope scope)
-			where TContract : class;
-		TContract Resolve<TContract>([CanBeNull] string key, Scope scope)
-			where TContract : class;
-		void Postpone<TContract>([CanBeNull] string key, Scope scope, [NotNull] Action<TContract> callback)
-			where TContract : class;
-	}
+    /// <summary>
+    /// Provides high level query interactions on a container.
+    /// </summary>
+    public interface IServiceLocator
+    {
+        /// <summary>
+        /// Returns wether the service locator can provides an instance of a
+        /// contract matching the specified key and within the specified scope.
+        /// </summary>
+        /// <typeparam name="TContract">Type of the contract to provide</typeparam>
+        /// <param name="key">Key associated to the contract</param>
+        /// <param name="scope">The range that should be used when looking for the contract.</param>
+        /// <returns></returns>
+        bool CanResolve<TContract>([CanBeNull] string key, Scope scope)
+            where TContract : class;
+
+        /// <summary>
+        /// Provides an instance of a contract matching the specified key and
+        /// within the specified scope.
+        /// </summary>
+        /// <typeparam name="TContract">Type of the contract to provide</typeparam>
+        /// <param name="key">Key associated to the contract</param>
+        /// <param name="scope">The range that should be used when looking for the contract.</param>
+        TContract Resolve<TContract>([CanBeNull] string key, Scope scope)
+            where TContract : class;
+
+        /// <summary>
+        /// Schedule a callback to be executed once the service locator can
+        /// provide an instance of a contract matching the specified key and
+        /// within the specified scope.
+        /// </summary>
+        /// <typeparam name="TContract">Type of the contract to provide</typeparam>
+        /// <param name="key">Key associated to the contract</param>
+        /// <param name="scope">The range that should be used when looking for the contract.</param>
+        /// <param name="callback">A action to execute requiring a specific service instance that is not yet available.</param>
+        void Postpone<TContract>([CanBeNull] string key, Scope scope, [NotNull] Action<TContract> callback)
+            where TContract : class;
+    }
 }

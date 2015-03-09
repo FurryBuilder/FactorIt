@@ -26,14 +26,15 @@
 
 using FactorIt.Contracts;
 using FluffIt;
+using JetBrains.Annotations;
 
 namespace FactorIt.Extensions
 {
-	public static class ContainerNodeExtensions
-	{
-		internal static IContainer GetRootNode([NotNull] this IContainer source)
-		{
-			return source.Parent.SelectOrDefault(p => p.GetRootNode(), source);
-		}
-	}
+    public static class ContainerNodeExtensions
+    {
+        internal static IContainer GetRootNode([NotNull] this IContainer container)
+        {
+            return container.Parent.SelectOrDefault(p => p.GetRootNode(), container);
+        }
+    }
 }

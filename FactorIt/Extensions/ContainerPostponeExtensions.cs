@@ -25,87 +25,119 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 using System;
-
 using FactorIt.Contracts;
 using FluffIt;
+using JetBrains.Annotations;
 
 namespace FactorIt.Extensions
 {
-	public static class ContainerPostponeExtensions
-	{
-		public static void Postpone([NotNull] this IContainer source, [NotNull] RegistrationKey key, Scope scope, [NotNull] Action<object> callback)
-		{
-			if (source.Contains(key, scope))
-			{
-				callback.Invoke(source.First(key, scope).Value);
-				return;
-			}
+    public static class ContainerPostponeExtensions
+    {
+        /// <summary>
+        /// Register a callback to be executed once a specified registration key
+        /// becomes available on a specified container hierarchy within the
+        /// specified scope. If the key is already available, triggers the
+        /// callback imediately.
+        /// </summary>
+        /// <param name="container">The container to use as the entry to the hierarchy</param>
+        /// <param name="key">The registration key to watch</param>
+        /// <param name="scope">The scope in which the key will be watched</param>
+        /// <param name="callback">The callback to execute when the key becomes available</param>
+        /// <exception cref="Exception">A delegate callback throws an exception. </exception>
+        public static void Postpone(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key,
+            Scope scope,
+            [NotNull] Action<object> callback)
+        {
+            if (container.Contains(key, scope))
+            {
+                callback.Invoke(container.First(key, scope).Value);
+                return;
+            }
 
-			if (scope.HasFlag(Scope.Local))
-			{
-				source.PostponeLocal(key, callback);
-			}
+            if (scope.HasFlag(Scope.Local))
+            {
+                container.PostponeLocal(key, callback);
+            }
 
-			if (scope.HasFlag(Scope.Parent))
-			{
-				source.PostponeParent(key, callback);
-			}
+            if (scope.HasFlag(Scope.Parent))
+            {
+                container.PostponeParent(key, callback);
+            }
 
-			if (scope.HasFlag(Scope.Children))
-			{
-				source.PostponeChildren(key, callback);
-			}
-		}
+            if (scope.HasFlag(Scope.Children))
+            {
+                container.PostponeChildren(key, callback);
+            }
+        }
 
-		private static void PostponeParent([NotNull] this IContainer source, [NotNull] RegistrationKey key, [NotNull] Action<object> callback)
-		{
-			source.Parent.Maybe(p => p.PostponeLocal(key, callback));
-		}
+        private static void PostponeParent(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key,
+            [NotNull] Action<object> callback)
+        {
+            container.Parent.Maybe(p => p.PostponeLocal(key, callback));
+        }
 
-		private static void PostponeLocal([NotNull] this IContainer source, [NotNull] RegistrationKey key, [NotNull] Action<object> callback)
-		{
-			source.GetPostponingHandler(key).Postpone(callback);
-		}
+        private static void PostponeLocal(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key,
+            [NotNull] Action<object> callback)
+        {
+            container.GetPostponingHandler(key).Postpone(callback);
+        }
 
-		private static PostponedAction GetPostponingHandler([NotNull] this IContainer source, [NotNull] RegistrationKey key)
-		{
-			PostponedAction postponedAction;
-			if (!source.PostponedActions.TryGetValue(key, out postponedAction))
-			{
-				postponedAction = new PostponedAction(() => source.PrunePostponedActionsFromHierarchy(key));
-				source.PostponedActions.Add(key, postponedAction);
-			}
+        private static PostponedAction GetPostponingHandler(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key)
+        {
+            PostponedAction postponedAction;
+            if (container.PostponedActions.TryGetValue(key, out postponedAction))
+            {
+                return postponedAction;
+            }
 
-			return postponedAction;
-		}
+            postponedAction = new PostponedAction(() => container.PrunePostponedActionsFromHierarchy(key));
+            container.PostponedActions.Add(key, postponedAction);
 
-		private static void PostponeChildren([NotNull] this IContainer source, [NotNull] RegistrationKey key, [NotNull] Action<object> callback)
-		{
-			foreach (var child in source.Children)
-			{
-				child.PostponeLocal(key, callback);
+            return postponedAction;
+        }
 
-				child.PostponeChildren(key, callback);
-			}
-		}
+        private static void PostponeChildren(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key,
+            [NotNull] Action<object> callback)
+        {
+            foreach (var child in container.Children)
+            {
+                child.PostponeLocal(key, callback);
 
-		private static void PrunePostponedActionsFromHierarchy([NotNull] this IContainer source, [NotNull] RegistrationKey key)
-		{
-			source.GetRootNode().RemovePostponedActionsFromChildren(key);
-		}
+                child.PostponeChildren(key, callback);
+            }
+        }
 
-		private static void RemovePostponedActionsFromChildren([NotNull] this IContainer node, [NotNull] RegistrationKey key)
-		{
-			PostponedAction action;
-			if (node.PostponedActions.TryGetValue(key, out action))
-			{
-				node.PostponedActions.Remove(key);
-			}
+        private static void PrunePostponedActionsFromHierarchy(
+            [NotNull] this IContainer container,
+            [NotNull] RegistrationKey key)
+        {
+            container.GetRootNode().RemovePostponedActionsFromChildren(key);
+        }
 
-			foreach (var child in node.Children)
-			{
-				child.RemovePostponedActionsFromChildren(key);
-			}
-		}
-	}
+        private static void RemovePostponedActionsFromChildren(
+            [NotNull] this IContainer node,
+            [NotNull] RegistrationKey key)
+        {
+            PostponedAction action;
+            if (node.PostponedActions.TryGetValue(key, out action))
+            {
+                node.PostponedActions.Remove(key);
+            }
+
+            foreach (var child in node.Children)
+            {
+                child.RemovePostponedActionsFromChildren(key);
+            }
+        }
+    }
 }

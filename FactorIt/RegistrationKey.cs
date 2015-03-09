@@ -61,12 +61,27 @@ namespace FactorIt
         {
             public override bool Equals([CanBeNull] RegistrationKey x, [CanBeNull] RegistrationKey y)
             {
+                if (x == null && y != null)
+                {
+                    return false;
+                }
+
+                if (x != null && y == null)
+                {
+                    return false;
+                }
+
+                if (ReferenceEquals(x, y))
+                {
+                    return true;
+                }
+
                 return
                     string.Equals(x.Key, y.Key) &&
                     x.Type == y.Type;
             }
 
-            public override int GetHashCode([CanBeNull] RegistrationKey obj)
+            public override int GetHashCode([NotNull] RegistrationKey obj)
             {
                 unchecked
                 {

@@ -42,24 +42,17 @@ namespace FactorIt.Extensions
         {
             // TODO: Use a special ServiceLocator instance to track all Resolve call to build a dependency tree that will be used to dispose services.
 
-            var disposables = container.Registrations
+            container.Registrations
                 .Select(registration => registration.Value.SelectOrDefault(v => v.IsValueCreated ? v.Value : null))
-                .OfType<IDisposable>();
-
-            foreach (var disposable in disposables)
-            {
-                disposable.Dispose();
-            }
+                .OfType<IDisposable>()
+                .ForEach(d => d.Dispose());
 
             container.Registrations.Clear();
             container.PostponedActions.Clear();
 
             container.As<IContainerNode>().UnregisterFromParent();
 
-            foreach (var child in container.Children)
-            {
-                child.Dispose();
-            }
+            container.Children.ForEach(c => c.Dispose());
         }
     }
 }

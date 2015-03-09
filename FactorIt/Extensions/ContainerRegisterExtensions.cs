@@ -49,7 +49,7 @@ namespace FactorIt.Extensions
         {
             if (container.Registrations.ContainsKey(key))
             {
-                throw new InvalidOperationException(string.Format(Container.Constants.ContractAlreadyRegistered, key));
+                throw new InvalidOperationException(Container.Constants.ContractAlreadyRegistered.Format(key));
             }
 
             container.Registrations.Add(key, registration);

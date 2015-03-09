@@ -59,7 +59,7 @@ namespace FactorIt.Extensions
                 return container.FirstChildren(key);
             }
 
-            throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
         }
 
         private static IRegistration FirstParent([NotNull] this IContainerNode container, [NotNull] RegistrationKey key)
@@ -71,7 +71,7 @@ namespace FactorIt.Extensions
                     : container.Parent.FirstParent(key);
             }
 
-            throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
         }
 
         private static IRegistration FirstLocal([NotNull] this IContainer container, [NotNull] RegistrationKey key)
@@ -82,7 +82,7 @@ namespace FactorIt.Extensions
                 return registration;
             }
 
-            throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
         }
 
         private static IRegistration FirstChildren([NotNull] this IContainerNode container, [NotNull] RegistrationKey key)
@@ -94,7 +94,7 @@ namespace FactorIt.Extensions
                     : c.FirstChildren(key);
             }
 
-            throw new InvalidOperationException(string.Format(Container.Constants.ContractNotRegistered, key));
+            throw new InvalidOperationException(Container.Constants.ContractNotRegistered.Format(key));
         }
     }
 }

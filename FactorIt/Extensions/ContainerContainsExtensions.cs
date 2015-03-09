@@ -53,16 +53,7 @@ namespace FactorIt.Extensions
 
         internal static bool ContainsChildren([NotNull] this IContainer container, [NotNull] RegistrationKey key)
         {
-            return container.Children.Any(
-                c =>
-                {
-                    if (c.ContainsLocal(key))
-                    {
-                        return true;
-                    }
-
-                    return c.ContainsChildren(key);
-                });
+            return container.Children.Any(c => c.ContainsLocal(key) || c.ContainsChildren(key));
         }
     }
 }

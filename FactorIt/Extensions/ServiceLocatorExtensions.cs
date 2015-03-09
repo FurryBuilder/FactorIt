@@ -197,11 +197,6 @@ namespace FactorIt.Extensions
             [NotNull] Func<TContract> defaultFactory)
             where TContract : class
         {
-            if (serviceLocator == null)
-            {
-                return defaultFactory.Invoke();
-            }
-
             return serviceLocator.CanResolve<TContract>(key, Scope.Default)
                 ? serviceLocator.Resolve<TContract>(key, Scope.Default)
                 : defaultFactory.Invoke();
@@ -226,11 +221,6 @@ namespace FactorIt.Extensions
             [NotNull] Func<TContract> defaultFactory)
             where TContract : class
         {
-            if (serviceLocator == null)
-            {
-                return defaultFactory.Invoke();
-            }
-
             return serviceLocator.CanResolve<TContract>(null, scope)
                 ? serviceLocator.Resolve<TContract>(null, scope)
                 : defaultFactory.Invoke();
@@ -257,11 +247,6 @@ namespace FactorIt.Extensions
             [NotNull] Func<TContract> defaultFactory)
             where TContract : class
         {
-            if (serviceLocator == null)
-            {
-                return defaultFactory.Invoke();
-            }
-
             return serviceLocator.CanResolve<TContract>(key, scope)
                 ? serviceLocator.Resolve<TContract>(key, scope)
                 : defaultFactory.Invoke();

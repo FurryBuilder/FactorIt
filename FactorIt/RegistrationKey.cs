@@ -86,7 +86,7 @@ namespace FactorIt
                 unchecked
                 {
                     return
-                        ((obj.Key != null ? obj.Key.GetHashCode() : 0)*397) ^
+                        ((obj.Key != null ? obj.Key.GetHashCode() : 0) * 397) ^
                         obj.Type.GetHashCode();
                 }
             }

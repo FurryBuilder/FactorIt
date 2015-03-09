@@ -44,8 +44,10 @@ namespace FactorIt
 
         internal Registration()
         {
-            _registration =
-                new Lazy<object>(() => _decorator.SelectOrDefault(d => d.Invoke(_factory.Invoke()), _factory.Invoke()));
+            _registration = new Lazy<object>(() => _decorator.SelectOrDefault(
+                d => d.Invoke(_factory.Invoke()),
+                _factory.Invoke()
+            ));
         }
 
         public object Value

@@ -98,7 +98,7 @@ container
 Sometimes, you will also need to schedule operations to be executed when a specific contract is registered. This could be useful if you insert plugins dynamically into the container or if you simply need to notify your log manager that a new logging destination has been registered. This can be done using the `Postpone` method.
 
 ```csharp
-container.Postpone<IService>(iservice => Manager.ScanContainer());
+container.Postpone<ILogDestination>(dest => LogManager.Add(dest));
 ```
 
 ### Child Containers
